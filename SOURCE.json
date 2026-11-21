@@ -1,0 +1,24 @@
+{
+  "schema": "qrscan-swift-stage/1",
+  "engine": {
+    "repository": "https://github.com/qrcode-ai-com/qrcode-barcode-scanner-rust",
+    "revision": "ee6e8f18bf59808093d2a369baeaad33122edb52"
+  },
+  "package": {
+    "version": "0.11.0",
+    "engine_tag": "v0.11.0",
+    "engine_commit": "176ac96ef16ee330dbfc6ada10327d0b4e23a8b2",
+    "binary_target": "https://github.com/qrcode-ai-com/qrcode-barcode-scanner-rust/releases/download/swift-v0.11.0/QrcodeAiScannerFFI.xcframework.zip",
+    "checksum": "496d36d7e8ea8e9e414a1309b3f7af84bfce9009ca59265d3e90a8d00c89ad4b"
+  },
+  "files": {
+    ".gitignore": "f736571a3a9d6559c57bf4f9d0d255c57bb84af6b7712e3e5c3cec55184d5a13",
+    "LICENSE": "8486a10c4393cee1c25392769ddd3b2d6c242d6ec7928e1414efff7dfb2f07ef",
+    "LICENSE-APACHE-2.0": "865b180617725f20be71aa305e82efaa8e56b3c6936d68089bc63cf91cb23087",
+    "LICENSE-NOTES.md": "1dbf32998814e1ed5541c8bc8da303811f601d496af1c4cb787707633f6fb017",
+    "Package.swift": "0de87b315817b3b548dd1c58576234248b0cb5dca7bfeafa481d8495a88181fe",
+    "README.md": "5f021cc0adae427b92ee36e758bafc2537e6c8dffc44d0123755eea6d83c93ae",
+    "Sources/QRCodeBarcodeScanner/qrcode_ai_scanner_uniffi.swift": "685c4a673c168624d2c93048e1df8c25cea5caffc414f940cfb48fb96c5aad0e",
+    "THIRD-PARTY.md": "e3c3e5d7b5f2e2d880fa39216658df0f84f0de297dd211b65d38373e8e7c6a4a"
+  }
+}
