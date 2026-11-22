@@ -4,7 +4,7 @@
 // in process, with the open-source engine compiled into the binary target below.
 //
 // Written by scripts/stage-swift-package.py of
-// https://github.com/qrcode-ai-com/qrcode-barcode-scanner-rust from engine v0.11.0. The
+// https://github.com/qrcode-ai-com/qrcode-barcode-scanner-rust from engine v0.12.0. The
 // engine repository is the only hand-edited source: change it there, never here.
 
 import PackageDescription
@@ -25,8 +25,8 @@ let package = Package(
         // The engine's static library for iOS devices, the iOS simulator and macOS.
         .binaryTarget(
             name: "QrcodeAiScannerFFI",
-            url: "https://github.com/qrcode-ai-com/qrcode-barcode-scanner-rust/releases/download/swift-v0.11.0/QrcodeAiScannerFFI.xcframework.zip",
-            checksum: "496d36d7e8ea8e9e414a1309b3f7af84bfce9009ca59265d3e90a8d00c89ad4b"
+            url: "https://github.com/qrcode-ai-com/qrcode-barcode-scanner-rust/releases/download/swift-v0.12.0/QrcodeAiScannerFFI.xcframework.zip",
+            checksum: "09cc53e7d538645e544ca2b617d6db519b72358e70d1a5111a70e0544bb14029"
         ),
     ]
 )

@@ -516,6 +516,12 @@ fileprivate struct FfiConverterData: FfiConverterRustBuffer {
 /**
  * Errors crossing the FFI. UniFFI requires an enum that implements
  * `std::error::Error`; the core's own QRS-XXX codes ride inside the message.
+ *
+ * The error is flat: a binding receives the variant and its message, the text
+ * of `Display` below, and nothing else. The value a variant holds here stays
+ * on the Rust side. Two reasons (owner decision of 12 November 2026): UniFFI's
+ * Ruby backend writes invalid Ruby for a variant with an unnamed value, and
+ * the other generators named that value `v1` and showed it in the message.
  */
 public enum ScanBindingError: Swift.Error, Equatable, Hashable, Foundation.LocalizedError {
 
@@ -524,50 +530,51 @@ public enum ScanBindingError: Swift.Error, Equatable, Hashable, Foundation.Local
     /**
      * Unknown profile name (not "full" / "fast" / "frame").
      */
-    case UnknownProfile(String
-    )
+    case UnknownProfile(message: String)
+    
     /**
      * Unknown stress-axis wire name in `score_skip_axes`.
      */
-    case UnknownStressAxis(String
-    )
+    case UnknownStressAxis(message: String)
+    
     /**
      * Unknown score-check wire name in `score_skip_checks`.
      */
-    case UnknownScoreCheck(String
-    )
+    case UnknownScoreCheck(message: String)
+    
     /**
      * Unknown alpha-background value in `alpha_background`.
      */
-    case UnknownAlphaBackground(String
-    )
+    case UnknownAlphaBackground(message: String)
+    
     /**
      * Unknown palette color in `alpha_palette`.
      */
-    case UnknownPaletteColor(String
-    )
+    case UnknownPaletteColor(message: String)
+    
     /**
      * More palette colors than the anti-DoS cap allows.
      */
-    case PaletteTooLarge(UInt64
-    )
+    case PaletteTooLarge(message: String)
+    
     /**
      * Unknown preset name in `score_preset`.
      */
-    case UnknownScorePreset(String
-    )
+    case UnknownScorePreset(message: String)
+    
     /**
      * `score_preset` and `score_skip_axes` were BOTH passed.
      */
-    case ScorePresetConflict
+    case ScorePresetConflict(message: String)
+    
     /**
      * A scan fault. A core error carries its `[QRS-xxx]` code in the
      * message: an option outside its domain (`QRS-006`: a `budget_ms` above
      * 4 294 967 295 or a zero cap, refused before the image is read) or an
      * invalid or oversized image or frame buffer (`QRS-001..004`).
      */
-    case ScanFailed(String
-    )
+    case ScanFailed(message: String)
+    
 
     
 
@@ -598,32 +605,43 @@ public struct FfiConverterTypeScanBindingError: FfiConverterRustBuffer {
 
         
         case 1: return .UnknownProfile(
-            try FfiConverterString.read(from: &buf)
-            )
+            message: try FfiConverterString.read(from: &buf)
+        )
+        
         case 2: return .UnknownStressAxis(
-            try FfiConverterString.read(from: &buf)
-            )
+            message: try FfiConverterString.read(from: &buf)
+        )
+        
         case 3: return .UnknownScoreCheck(
-            try FfiConverterString.read(from: &buf)
-            )
+            message: try FfiConverterString.read(from: &buf)
+        )
+        
         case 4: return .UnknownAlphaBackground(
-            try FfiConverterString.read(from: &buf)
-            )
+            message: try FfiConverterString.read(from: &buf)
+        )
+        
         case 5: return .UnknownPaletteColor(
-            try FfiConverterString.read(from: &buf)
-            )
+            message: try FfiConverterString.read(from: &buf)
+        )
+        
         case 6: return .PaletteTooLarge(
-            try FfiConverterUInt64.read(from: &buf)
-            )
+            message: try FfiConverterString.read(from: &buf)
+        )
+        
         case 7: return .UnknownScorePreset(
-            try FfiConverterString.read(from: &buf)
-            )
-        case 8: return .ScorePresetConflict
+            message: try FfiConverterString.read(from: &buf)
+        )
+        
+        case 8: return .ScorePresetConflict(
+            message: try FfiConverterString.read(from: &buf)
+        )
+        
         case 9: return .ScanFailed(
-            try FfiConverterString.read(from: &buf)
-            )
+            message: try FfiConverterString.read(from: &buf)
+        )
+        
 
-         default: throw UniffiInternalError.unexpectedEnumCase
+        default: throw UniffiInternalError.unexpectedEnumCase
         }
     }
 
@@ -633,50 +651,26 @@ public struct FfiConverterTypeScanBindingError: FfiConverterRustBuffer {
         
 
         
-        
-        case let .UnknownProfile(v1):
+        case .UnknownProfile(_ /* message is ignored*/):
             writeInt(&buf, Int32(1))
-            FfiConverterString.write(v1, into: &buf)
-            
-        
-        case let .UnknownStressAxis(v1):
+        case .UnknownStressAxis(_ /* message is ignored*/):
             writeInt(&buf, Int32(2))
-            FfiConverterString.write(v1, into: &buf)
-            
-        
-        case let .UnknownScoreCheck(v1):
+        case .UnknownScoreCheck(_ /* message is ignored*/):
             writeInt(&buf, Int32(3))
-            FfiConverterString.write(v1, into: &buf)
-            
-        
-        case let .UnknownAlphaBackground(v1):
+        case .UnknownAlphaBackground(_ /* message is ignored*/):
             writeInt(&buf, Int32(4))
-            FfiConverterString.write(v1, into: &buf)
-            
-        
-        case let .UnknownPaletteColor(v1):
+        case .UnknownPaletteColor(_ /* message is ignored*/):
             writeInt(&buf, Int32(5))
-            FfiConverterString.write(v1, into: &buf)
-            
-        
-        case let .PaletteTooLarge(v1):
+        case .PaletteTooLarge(_ /* message is ignored*/):
             writeInt(&buf, Int32(6))
-            FfiConverterUInt64.write(v1, into: &buf)
-            
-        
-        case let .UnknownScorePreset(v1):
+        case .UnknownScorePreset(_ /* message is ignored*/):
             writeInt(&buf, Int32(7))
-            FfiConverterString.write(v1, into: &buf)
-            
-        
-        case .ScorePresetConflict:
+        case .ScorePresetConflict(_ /* message is ignored*/):
             writeInt(&buf, Int32(8))
-        
-        
-        case let .ScanFailed(v1):
+        case .ScanFailed(_ /* message is ignored*/):
             writeInt(&buf, Int32(9))
-            FfiConverterString.write(v1, into: &buf)
-            
+
+        
         }
     }
 }

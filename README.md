@@ -47,6 +47,21 @@ The [QR code scanner](https://qrcode-ai.com/en-US/qr-code-scanner) and [barcode 
 > dependency line resolves. [How this repository is made](#how-this-repository-is-made) says
 > what a release adds.
 
+## How it works
+
+<p align="center">
+  <a href="https://github.com/qrcode-ai-com/qrcode-barcode-scanner-rust#get-started">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/qrcode-ai-com/.github/main/profile/assets/journey-packages-dark.gif?v=50f76ea0d290">
+      <img src="https://raw.githubusercontent.com/qrcode-ai-com/.github/main/profile/assets/journey-packages-light.gif?v=4ec5c6f31076" alt="Scan inside your application, in Rust, Node.js, browser WASM or Python, in three steps: install and initialize, pass an image or a camera frame, read the result." width="100%">
+    </picture>
+  </a>
+</p>
+
+The picture shows the three steps of the package route. In Swift they are: add the
+`QRCodeBarcodeScanner` library to your app, pass the bytes of an image to `scan` or the RGBA
+pixels of a camera frame to `scanFrame`, then decode the JSON report each call returns.
+
 ## Usage
 
 The library product and module are `QRCodeBarcodeScanner`. `scan` takes the bytes of an encoded
@@ -63,7 +78,7 @@ let frameJson = try scanFrame(rgba: pixels, width: width, height: height, profil
 Each call returns the report as a JSON `String` and throws `ScanBindingError` for an image it
 cannot read or an option it does not know. An image without a code is not an error: its report
 has no detections. The profiles are `fast`, `full` and `frame`; the report's fields are
-described in the engine's [report specification](https://github.com/qrcode-ai-com/qrcode-barcode-scanner-rust/blob/ee6e8f18bf59808093d2a369baeaad33122edb52/spec/01-report.md).
+described in the engine's [report specification](https://github.com/qrcode-ai-com/qrcode-barcode-scanner-rust/blob/2e9604c953a4fff52d5890c55270d14452d788a0/spec/01-report.md).
 
 Decode the report leniently: it grows by additive keys and enum values, so make new keys
 optional and read enum-like values such as `geometry.kind` as `String`. A report is final only
@@ -107,6 +122,32 @@ the same image come back in one report.
 
 The engine's [supported formats](https://github.com/qrcode-ai-com/qrcode-barcode-scanner-rust#supported-formats) section states the known limits.
 
+## The same engine in other runtimes
+
+<p align="center">
+  <a href="https://github.com/qrcode-ai-com/qrcode-barcode-scanner-rust#get-started">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/qrcode-ai-com/qrcode-barcode-scanner-rust/main/docs/assets/brand/runtimes-dark.png?v=57c63428574b">
+      <img src="https://raw.githubusercontent.com/qrcode-ai-com/qrcode-barcode-scanner-rust/main/docs/assets/brand/runtimes-light.png?v=6dbd5a8cf5ba" alt="One engine in the language you write: Rust on crates.io, Node.js and the browser on npm, Python on PyPI, Go, PHP, and the qrscan command line" width="100%">
+    </picture>
+  </a>
+</p>
+
+| Runtime | Package | How it scans |
+|---|---|---|
+| <picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/qrcode-ai-com/qrcode-barcode-scanner-rust/main/docs/assets/brand/mark-lang-rust-dark.png?v=31b5deebc32e"><img src="https://raw.githubusercontent.com/qrcode-ai-com/qrcode-barcode-scanner-rust/main/docs/assets/brand/mark-lang-rust-light.png?v=c5207721973f" alt="" width="24" height="24" align="absmiddle"></picture> Rust | [`qrcode-barcode-scanner`](https://crates.io/crates/qrcode-barcode-scanner) on crates.io | In process |
+| <picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/qrcode-ai-com/qrcode-barcode-scanner-rust/main/docs/assets/brand/mark-lang-nodejs-dark.png?v=cf2159524fc6"><img src="https://raw.githubusercontent.com/qrcode-ai-com/qrcode-barcode-scanner-rust/main/docs/assets/brand/mark-lang-nodejs-light.png?v=6dd098480218" alt="" width="24" height="24" align="absmiddle"></picture> Node.js | [`@qrcode-ai-com/qrcode-barcode-scanner`](https://www.npmjs.com/package/@qrcode-ai-com/qrcode-barcode-scanner) on npm | In process, native |
+| <picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/qrcode-ai-com/qrcode-barcode-scanner-rust/main/docs/assets/brand/mark-lang-browser-dark.png?v=bbe2f3560a6d"><img src="https://raw.githubusercontent.com/qrcode-ai-com/qrcode-barcode-scanner-rust/main/docs/assets/brand/mark-lang-browser-light.png?v=591e304cf9e9" alt="" width="24" height="24" align="absmiddle"></picture> Browser | [`@qrcode-ai-com/qrcode-barcode-scanner-wasm`](https://www.npmjs.com/package/@qrcode-ai-com/qrcode-barcode-scanner-wasm) on npm | In the page, WebAssembly |
+| <picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/qrcode-ai-com/qrcode-barcode-scanner-rust/main/docs/assets/brand/mark-lang-python-dark.png?v=7469c3e0b4fb"><img src="https://raw.githubusercontent.com/qrcode-ai-com/qrcode-barcode-scanner-rust/main/docs/assets/brand/mark-lang-python-light.png?v=308121255ab7" alt="" width="24" height="24" align="absmiddle"></picture> Python | [`qrcode-barcode-scanner`](https://pypi.org/project/qrcode-barcode-scanner/) on PyPI | In process |
+| <picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/qrcode-ai-com/qrcode-barcode-scanner-rust/main/docs/assets/brand/mark-lang-go-dark.png?v=b6dbac901176"><img src="https://raw.githubusercontent.com/qrcode-ai-com/qrcode-barcode-scanner-rust/main/docs/assets/brand/mark-lang-go-light.png?v=1983a9eb7344" alt="" width="24" height="24" align="absmiddle"></picture> Go | [`qrcode-barcode-scanner-go`](https://github.com/qrcode-ai-com/qrcode-barcode-scanner-go) | Through the installed `qrscan` |
+| <picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/qrcode-ai-com/qrcode-barcode-scanner-rust/main/docs/assets/brand/mark-lang-php-dark.png?v=3800932934c8"><img src="https://raw.githubusercontent.com/qrcode-ai-com/qrcode-barcode-scanner-rust/main/docs/assets/brand/mark-lang-php-light.png?v=7bdd6884b3a4" alt="" width="24" height="24" align="absmiddle"></picture> PHP | [`qrcode-barcode-scanner-php`](https://github.com/qrcode-ai-com/qrcode-barcode-scanner-php) | Through the installed `qrscan` |
+| <picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/qrcode-ai-com/qrcode-barcode-scanner-rust/main/docs/assets/brand/mark-terminal-dark.png?v=1e987f0ab278"><img src="https://raw.githubusercontent.com/qrcode-ai-com/qrcode-barcode-scanner-rust/main/docs/assets/brand/mark-terminal-light.png?v=2262d66bee6b" alt="" width="24" height="24" align="absmiddle"></picture> Command line | [`qrscan`](https://github.com/qrcode-ai-com/qrcode-barcode-scanner-rust#command-line) | One command, one JSON report |
+
+The Rust, Node.js, browser and Python packages hold the engine. The Go and PHP packages hold no decoder:
+each one starts `qrscan` and hands you its report.
+
+<sub>Language and platform names and logos belong to their owners. They identify a runtime or a destination and imply no endorsement.</sub>
+
 ## Platforms
 
 | Platform | Minimum | Slices of the xcframework |
@@ -122,9 +163,9 @@ in your app.
 
 The engine repository, [qrcode-barcode-scanner-rust](https://github.com/qrcode-ai-com/qrcode-barcode-scanner-rust),
 is the only hand-edited source of this package. Its workflow
-[Swift package](https://github.com/qrcode-ai-com/qrcode-barcode-scanner-rust/blob/ee6e8f18bf59808093d2a369baeaad33122edb52/.github/workflows/swift-package.yml) builds the engine tag that
+[Swift package](https://github.com/qrcode-ai-com/qrcode-barcode-scanner-rust/blob/2e9604c953a4fff52d5890c55270d14452d788a0/.github/workflows/swift-package.yml) builds the engine tag that
 `SOURCE.json` names for iOS and macOS, generates the Swift with UniFFI, and
-[`scripts/stage-swift-package.py`](https://github.com/qrcode-ai-com/qrcode-barcode-scanner-rust/blob/ee6e8f18bf59808093d2a369baeaad33122edb52/scripts/stage-swift-package.py) writes this whole tree
+[`scripts/stage-swift-package.py`](https://github.com/qrcode-ai-com/qrcode-barcode-scanner-rust/blob/2e9604c953a4fff52d5890c55270d14452d788a0/scripts/stage-swift-package.py) writes this whole tree
 from one commit of the engine repository. The same workflow compares this repository with the
 stage of the commit it names, and installs the staged package in a clean Swift package, where it
 reads both codes of the engine's mixed QR code and Code 128 sample in the three profiles.
