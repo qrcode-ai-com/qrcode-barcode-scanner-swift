@@ -38,14 +38,25 @@ Help me understand QR Code & Barcode Scanner for Swift (bindings/swift/package/R
 
 <!-- /qrcode-ai-readme-actions:v2 -->
 
+[![Swift versions](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fqrcode-ai-com%2Fqrcode-barcode-scanner-swift%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/qrcode-ai-com/qrcode-barcode-scanner-swift)
+[![Platforms](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fqrcode-ai-com%2Fqrcode-barcode-scanner-swift%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/qrcode-ai-com/qrcode-barcode-scanner-swift)
+
 This Swift package reads QR codes and barcodes from an image on iOS and macOS, in process, with the open-source engine of QR Code & Barcode Scanner compiled into an xcframework. Your app supplies the image or the camera frame and owns permissions and presentation; the package returns one JSON report that lists every code it found, with its format, its content and where it sits in the image.
 
 The [QR code scanner](https://qrcode-ai.com/en-US/qr-code-scanner) and [barcode scanner](https://qrcode-ai.com/en-US/barcode-scanner) are QR Code AI's browser scanning entry points. The [QR code scanner iOS guide](https://qrcode-ai.com/en-US/qr-code-scanner/sdk/ios) and the [barcode scanner iOS guide](https://qrcode-ai.com/en-US/barcode-scanner/sdk/ios) are the development routes for Apple platforms. To prepare a known label for a test, use the [QR code generator](https://qrcode-ai.com/en-US/qr-code-generator) or the [barcode generator](https://qrcode-ai.com/en-US/barcode-generator), and keep the payload you encoded to compare it with the report.
 
-> **Not published yet.** This repository is the package SwiftPM and the Swift Package Index read,
-> and no version of it is tagged yet: until the first tag and its release asset exist, no
-> dependency line resolves. [How this repository is made](#how-this-repository-is-made) says
-> what a release adds.
+## Install
+
+Add the package by this repository's URL, in Xcode or in a `Package.swift`:
+
+```swift
+.package(url: "https://github.com/qrcode-ai-com/qrcode-barcode-scanner-swift.git", from: "0.12.0")
+```
+
+Then link `.product(name: "QRCodeBarcodeScanner", package: "qrcode-barcode-scanner-swift")` to
+your target. SwiftPM fetches the prebuilt xcframework that `Package.swift` pins by its checksum,
+so no Rust toolchain is needed. The package is listed on the
+[Swift Package Index](https://swiftpackageindex.com/qrcode-ai-com/qrcode-barcode-scanner-swift).
 
 ## How it works
 
@@ -78,7 +89,7 @@ let frameJson = try scanFrame(rgba: pixels, width: width, height: height, profil
 Each call returns the report as a JSON `String` and throws `ScanBindingError` for an image it
 cannot read or an option it does not know. An image without a code is not an error: its report
 has no detections. The profiles are `fast`, `full` and `frame`; the report's fields are
-described in the engine's [report specification](https://github.com/qrcode-ai-com/qrcode-barcode-scanner-rust/blob/2e9604c953a4fff52d5890c55270d14452d788a0/spec/01-report.md).
+described in the engine's [report specification](https://github.com/qrcode-ai-com/qrcode-barcode-scanner-rust/blob/9a0bd3c5bca7d1a61fd1ba2342b4554b0e146e6a/spec/01-report.md).
 
 Decode the report leniently: it grows by additive keys and enum values, so make new keys
 optional and read enum-like values such as `geometry.kind` as `String`. A report is final only
@@ -163,9 +174,9 @@ in your app.
 
 The engine repository, [qrcode-barcode-scanner-rust](https://github.com/qrcode-ai-com/qrcode-barcode-scanner-rust),
 is the only hand-edited source of this package. Its workflow
-[Swift package](https://github.com/qrcode-ai-com/qrcode-barcode-scanner-rust/blob/2e9604c953a4fff52d5890c55270d14452d788a0/.github/workflows/swift-package.yml) builds the engine tag that
+[Swift package](https://github.com/qrcode-ai-com/qrcode-barcode-scanner-rust/blob/9a0bd3c5bca7d1a61fd1ba2342b4554b0e146e6a/.github/workflows/swift-package.yml) builds the engine tag that
 `SOURCE.json` names for iOS and macOS, generates the Swift with UniFFI, and
-[`scripts/stage-swift-package.py`](https://github.com/qrcode-ai-com/qrcode-barcode-scanner-rust/blob/2e9604c953a4fff52d5890c55270d14452d788a0/scripts/stage-swift-package.py) writes this whole tree
+[`scripts/stage-swift-package.py`](https://github.com/qrcode-ai-com/qrcode-barcode-scanner-rust/blob/9a0bd3c5bca7d1a61fd1ba2342b4554b0e146e6a/scripts/stage-swift-package.py) writes this whole tree
 from one commit of the engine repository. The same workflow compares this repository with the
 stage of the commit it names, and installs the staged package in a clean Swift package, where it
 reads both codes of the engine's mixed QR code and Code 128 sample in the three profiles.
