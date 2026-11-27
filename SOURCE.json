@@ -2,23 +2,23 @@
   "schema": "qrscan-swift-stage/1",
   "engine": {
     "repository": "https://github.com/qrcode-ai-com/qrcode-barcode-scanner-rust",
-    "revision": "9a0bd3c5bca7d1a61fd1ba2342b4554b0e146e6a"
+    "revision": "8eb984ad77c1b2320a77507557fedb276f50e289"
   },
   "package": {
-    "version": "0.12.0",
-    "engine_tag": "v0.12.0",
-    "engine_commit": "897dd50cdf27cbde54d408bf65e1ca4622035d42",
-    "binary_target": "https://github.com/qrcode-ai-com/qrcode-barcode-scanner-rust/releases/download/swift-v0.12.0/QrcodeAiScannerFFI.xcframework.zip",
-    "checksum": "09cc53e7d538645e544ca2b617d6db519b72358e70d1a5111a70e0544bb14029"
+    "version": "0.12.2",
+    "engine_tag": "v0.12.2",
+    "engine_commit": "d0fcf8a27410f5ee182aab6477624e3fc52c4aa5",
+    "binary_target": "https://github.com/qrcode-ai-com/qrcode-barcode-scanner-rust/releases/download/swift-v0.12.2/QrcodeAiScannerFFI.xcframework.zip",
+    "checksum": "2ad3b4aca44335201d06c8488620a0dd96e2ed606be3959898d36143e853e514"
   },
   "files": {
     ".gitignore": "f736571a3a9d6559c57bf4f9d0d255c57bb84af6b7712e3e5c3cec55184d5a13",
     "LICENSE": "f4d433b564117e27b6aaf8f2902f2200368f57bb2d8286129c2f1774c000295a",
     "LICENSE-APACHE-2.0": "865b180617725f20be71aa305e82efaa8e56b3c6936d68089bc63cf91cb23087",
-    "LICENSE-NOTES.md": "4c08842a8f4208591753dbc44289cfe66e73ed22c66522d62ac45969b1ae059d",
-    "Package.swift": "df93ce3ef4f67e17489514efd9282c9aea000792f0dc6ff205b2d3f4c4e22165",
-    "README.md": "9befc88db350242fb797688c2ac511ef1bfffa1e23cb09fe5278448db42ed078",
-    "Sources/QRCodeBarcodeScanner/qrcode_ai_scanner_uniffi.swift": "047f1db5a22c9a5c076be0bbe1e9517b3656d769aef208c5690c51331717ae14",
+    "LICENSE-NOTES.md": "d4f33621b669339cbaae2b7e23ca60ea8597dbecb7da0dc864ac9078eb6b2f96",
+    "Package.swift": "6a4e5532d1df24e069e7c2d2e8ac55aa717a642594129228ff6d7b03efe80557",
+    "README.md": "8c5bb7b6bd83bd9b7f1264b9062e7cb7acc798d1b86e57eab4c904472caf2447",
+    "Sources/QRCodeBarcodeScanner/qrcode_ai_scanner_uniffi.swift": "33674c177f38e344cdd024e16017d676b5e7645422a5af4521058fcb270251c4",
     "THIRD-PARTY.md": "542c2d99262bf4215de4de3d7e1a6e8b065b934b61ccb650dd82d2c4f96a71ab"
   }
 }

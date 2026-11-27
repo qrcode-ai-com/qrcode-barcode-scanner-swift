@@ -838,8 +838,13 @@ public func capabilities()throws  -> String  {
  * so a UI embedder bounds its scan thread with it. A report the budget cut
  * says so (`trace.budget_exhausted: true`): a `null` score beside detections
  * then means "not judged", never 0.
+ *
+ * `formats` (wire names, e.g. `["qr_code"]`) restricts the scan to the
+ * symbologies the app handles: no reader of another symbology runs, and the
+ * report says what was looked for (`trace.formats`). Unset or empty = every
+ * symbology; an unknown name is `ScanFailed` ending `[QRS-006]`.
  */
-public func scan(image: Data, profile: String = "full", maxDimension: UInt32? = nil, maxPixels: UInt64? = nil, budgetMs: UInt64? = nil, scoreSkipAxes: [String]? = nil, scoreSkipChecks: [String]? = nil, alphaBackground: String? = nil, alphaPalette: [String]? = nil, scorePreset: String? = nil)throws  -> String  {
+public func scan(image: Data, profile: String = "full", maxDimension: UInt32? = nil, maxPixels: UInt64? = nil, budgetMs: UInt64? = nil, scoreSkipAxes: [String]? = nil, scoreSkipChecks: [String]? = nil, alphaBackground: String? = nil, alphaPalette: [String]? = nil, scorePreset: String? = nil, formats: [String]? = nil)throws  -> String  {
     return try  FfiConverterString.lift(try rustCallWithError(FfiConverterTypeScanBindingError_lift) {
     uniffi_qrcode_ai_scanner_uniffi_fn_func_scan(
         FfiConverterData.lower(image),
@@ -851,7 +856,8 @@ public func scan(image: Data, profile: String = "full", maxDimension: UInt32? = 
         FfiConverterOptionSequenceString.lower(scoreSkipChecks),
         FfiConverterOptionString.lower(alphaBackground),
         FfiConverterOptionSequenceString.lower(alphaPalette),
-        FfiConverterOptionString.lower(scorePreset),$0
+        FfiConverterOptionString.lower(scorePreset),
+        FfiConverterOptionSequenceString.lower(formats),$0
     )
 })
 }
@@ -861,9 +867,10 @@ public func scan(image: Data, profile: String = "full", maxDimension: UInt32? = 
  * `rgba` must be `width * height * 4` bytes. `max_dimension` / `max_pixels`
  * cap attacker-controlled dimensions before any pixel work; `budget_ms`
  * overrides the profile's wall-clock budget (0 = unbounded) — the camera
- * loop's per-frame bound.
+ * loop's per-frame bound. `formats`: see [`scan`] — a camera that only
+ * handles QR Codes names `qr_code`.
  */
-public func scanFrame(rgba: Data, width: UInt32, height: UInt32, profile: String = "frame", maxDimension: UInt32? = nil, maxPixels: UInt64? = nil, budgetMs: UInt64? = nil, scoreSkipAxes: [String]? = nil, scoreSkipChecks: [String]? = nil, alphaBackground: String? = nil, alphaPalette: [String]? = nil, scorePreset: String? = nil)throws  -> String  {
+public func scanFrame(rgba: Data, width: UInt32, height: UInt32, profile: String = "frame", maxDimension: UInt32? = nil, maxPixels: UInt64? = nil, budgetMs: UInt64? = nil, scoreSkipAxes: [String]? = nil, scoreSkipChecks: [String]? = nil, alphaBackground: String? = nil, alphaPalette: [String]? = nil, scorePreset: String? = nil, formats: [String]? = nil)throws  -> String  {
     return try  FfiConverterString.lift(try rustCallWithError(FfiConverterTypeScanBindingError_lift) {
     uniffi_qrcode_ai_scanner_uniffi_fn_func_scan_frame(
         FfiConverterData.lower(rgba),
@@ -877,7 +884,8 @@ public func scanFrame(rgba: Data, width: UInt32, height: UInt32, profile: String
         FfiConverterOptionSequenceString.lower(scoreSkipChecks),
         FfiConverterOptionString.lower(alphaBackground),
         FfiConverterOptionSequenceString.lower(alphaPalette),
-        FfiConverterOptionString.lower(scorePreset),$0
+        FfiConverterOptionString.lower(scorePreset),
+        FfiConverterOptionSequenceString.lower(formats),$0
     )
 })
 }
@@ -900,10 +908,10 @@ private let initializationResult: InitializationResult = {
     if (uniffi_qrcode_ai_scanner_uniffi_checksum_func_capabilities() != 63118) {
         return InitializationResult.apiChecksumMismatch
     }
-    if (uniffi_qrcode_ai_scanner_uniffi_checksum_func_scan() != 1473) {
+    if (uniffi_qrcode_ai_scanner_uniffi_checksum_func_scan() != 16359) {
         return InitializationResult.apiChecksumMismatch
     }
-    if (uniffi_qrcode_ai_scanner_uniffi_checksum_func_scan_frame() != 47458) {
+    if (uniffi_qrcode_ai_scanner_uniffi_checksum_func_scan_frame() != 37144) {
         return InitializationResult.apiChecksumMismatch
     }
 

@@ -89,7 +89,7 @@ let frameJson = try scanFrame(rgba: pixels, width: width, height: height, profil
 Each call returns the report as a JSON `String` and throws `ScanBindingError` for an image it
 cannot read or an option it does not know. An image without a code is not an error: its report
 has no detections. The profiles are `fast`, `full` and `frame`; the report's fields are
-described in the engine's [report specification](https://github.com/qrcode-ai-com/qrcode-barcode-scanner-rust/blob/9a0bd3c5bca7d1a61fd1ba2342b4554b0e146e6a/spec/01-report.md).
+described in the engine's [report specification](https://github.com/qrcode-ai-com/qrcode-barcode-scanner-rust/blob/8eb984ad77c1b2320a77507557fedb276f50e289/spec/01-report.md).
 
 Decode the report leniently: it grows by additive keys and enum values, so make new keys
 optional and read enum-like values such as `geometry.kind` as `String`. A report is final only
@@ -174,9 +174,9 @@ in your app.
 
 The engine repository, [qrcode-barcode-scanner-rust](https://github.com/qrcode-ai-com/qrcode-barcode-scanner-rust),
 is the only hand-edited source of this package. Its workflow
-[Swift package](https://github.com/qrcode-ai-com/qrcode-barcode-scanner-rust/blob/9a0bd3c5bca7d1a61fd1ba2342b4554b0e146e6a/.github/workflows/swift-package.yml) builds the engine tag that
+[Swift package](https://github.com/qrcode-ai-com/qrcode-barcode-scanner-rust/blob/8eb984ad77c1b2320a77507557fedb276f50e289/.github/workflows/swift-package.yml) builds the engine tag that
 `SOURCE.json` names for iOS and macOS, generates the Swift with UniFFI, and
-[`scripts/stage-swift-package.py`](https://github.com/qrcode-ai-com/qrcode-barcode-scanner-rust/blob/9a0bd3c5bca7d1a61fd1ba2342b4554b0e146e6a/scripts/stage-swift-package.py) writes this whole tree
+[`scripts/stage-swift-package.py`](https://github.com/qrcode-ai-com/qrcode-barcode-scanner-rust/blob/8eb984ad77c1b2320a77507557fedb276f50e289/scripts/stage-swift-package.py) writes this whole tree
 from one commit of the engine repository. The same workflow compares this repository with the
 stage of the commit it names, and installs the staged package in a clean Swift package, where it
 reads both codes of the engine's mixed QR code and Code 128 sample in the three profiles.
